@@ -148,6 +148,19 @@ public:
     }
 
     /**
+     * @brief Checks if an entity has given component
+     * 
+     * @tparam Component 
+     * @param ent 
+    */
+    template<typename Component>
+    bool has(Entity ent)
+    {
+        auto pool = get_pool<Component>();
+        return pool->contains(ent);
+    }
+
+    /**
      * @brief Removes a component from an entity
      * 
      * @param ent an entity you're removing from
