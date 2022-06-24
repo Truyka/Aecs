@@ -114,6 +114,7 @@ int main()
     //SparseTest();
     //RegistryBasicTest();
     ViewBenchmark(1000000, 1);
+
     std::cin.get();
 }
 

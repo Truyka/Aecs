@@ -148,16 +148,15 @@ public:
     }
 
     /**
-     * @brief Checks if an entity has given component
+     * @brief Checks if an entity has every given component
      * 
-     * @tparam Component 
+     * @tparam Component... all components to match against
      * @param ent 
     */
-    template<typename Component>
+    template<typename... Component>
     bool has(Entity ent)
     {
-        auto pool = get_pool<Component>();
-        return pool->contains(ent);
+        return (get_pool<Component>()->contains(ent) && ...);
     }
 
     /**
