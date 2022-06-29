@@ -50,6 +50,9 @@ public:
 
     T& insert(T&& elem, Entity ent)
     {
+        /// TODO: Change this to check if it contains only the index
+        /// because bugs might occur when trying to insert a component
+        /// to a removed entity when a new version of it alreay exists
         if(contains(ent))
             return denseComponents_[sparse_at(ent.index)]; 
 
