@@ -92,7 +92,7 @@ public:
     add(Entity ent, Args&&... args)
     {
         auto pool = get_pool<Component>();
-        Component c{args...};
+        Component c{std::forward<Args>(args)...};
         return pool->insert(std::move(c), ent);
     }
 
