@@ -93,7 +93,7 @@ public:
     {
         auto pool = get_pool<Component>();
         Component c{std::forward<Args>(args)...};
-        return pool->insert(std::move(c), ent);
+        return pool->insert(std::move(c), ent, ReplacePolicy::Ignore);
     }
 
     /**
@@ -112,7 +112,47 @@ public:
     {
         auto pool = get_pool<Component>();
         Component c(std::forward<Args>(args)...);
-        return pool->insert(std::move(c), ent);
+        return pool->insert(std::move(c), ent, ReplacePolicy::Ignore);
+    }
+
+    /**
+     * @brief Constructs a component from given args using list initialization
+     * and adds it to an entity. If an entity already has this component, it's
+     * swapped for a newly created one
+     * 
+     * @param ent entity
+     * @param args arguments you will initialize the component with
+     * 
+     * @return Component& a reference to the added component or to an
+     * already existing one
+    */
+    template<typename Component, typename... Args>
+    std::enable_if_t<std::is_default_constructible<Component>::value, Component&>
+    set(Entity ent, Args&&... args)
+    {
+        auto pool = get_pool<Component>();
+        Component c{std::forward<Args>(args)...};
+        return pool->insert(std::move(c), ent, ReplacePolicy::Replace);
+    }
+
+    /**
+     * @brief Constructs a component from given args using list initialization
+     * and adds it to an entity. If an entity already has this component, it's
+     * swapped for a newly created one
+     * 
+     * @param ent entity
+     * @param args arguments you will initialize the component with
+     * 
+     * @return Component& a reference to the added component or to an
+     * already existing one
+    */
+    template<typename Component, typename... Args>
+    std::enable_if_t<!std::is_default_constructible<Component>::value, Component&>
+    set(Entity ent, Args&&... args)
+    {
+        auto pool = get_pool<Component>();
+        Component c(std::forward<Args>(args)...);
+        return pool->insert(std::move(c), ent, ReplacePolicy::Replace);
     }
 
     /**
