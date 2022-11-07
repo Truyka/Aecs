@@ -11,7 +11,7 @@ namespace aecs
 
 struct Entity
 {
-    inline static auto max = std::numeric_limits<size_t>::max();
+    static const size_t max = std::numeric_limits<size_t>::max();
     static const Entity null;
 
     Entity(size_t idx, size_t ver) : index(idx), version(ver)
