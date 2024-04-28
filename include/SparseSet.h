@@ -1,5 +1,5 @@
-#ifndef __SPARSESET_H__
-#define __SPARSESET_H__
+#ifndef __INCLUDE_SPARSESET__
+#define __INCLUDE_SPARSESET__
 
 #include <vector>
 #include <array>
@@ -56,9 +56,6 @@ public:
 
     T& insert(T&& elem, Entity ent, ReplacePolicy policy = ReplacePolicy::Ignore)
     {
-        /// TODO: Change this to check if it contains only the index
-        /// because bugs might occur when trying to insert a component
-        /// to a removed entity when a new version of it alreay exists
         if(contains(ent))
         {
             size_t idx = sparse_at(ent.index);
@@ -118,12 +115,8 @@ public:
 
         if(!sparse_[pageNo])
             return false;
-
-        const size_t index = sparse_at(ent.index);
-        if(index >= denseEntities_.size())
-            return false;
-
-        return denseEntities_[index] == ent;
+        
+        return sparse_at(ent.index) != SIZE_MAX;
     }
 
     T& get(Entity ent)
@@ -212,4 +205,4 @@ private:
 
 } // namespace aecs
 
-#endif // __SPARSESET_H__
+#endif /* __INCLUDE_SPARSESET__ */

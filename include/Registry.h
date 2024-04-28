@@ -13,7 +13,7 @@
 #include <type_traits>
 #include <tuple>
 
-/* AECS VERSION: 1.1
+/* AECS VERSION: 1.1.1
 */
 
 namespace aecs
